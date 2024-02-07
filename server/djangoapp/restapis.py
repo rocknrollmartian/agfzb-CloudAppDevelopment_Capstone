@@ -85,7 +85,7 @@ def get_dealer_by_id_from_cf(url, dealer_id):
             st=dealer_doc["st"],
             zip=dealer_doc["zip"]
         )
-        return dealer_obj
+        return results[0]
          # Return None or handle the case when json_result is empty
     return None
         
