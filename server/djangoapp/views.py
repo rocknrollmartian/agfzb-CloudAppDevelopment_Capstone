@@ -100,13 +100,12 @@ def registration_request(request):
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "https://mbellomy81-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get" #Add the Node server URL here
-        # Get dealers from the URL
+        url = "https://mbellomy81-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get" 
         dealerships = get_dealers_from_cf(url)
-        # Concat all dealer's short name
-        dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
-        # Return a list of dealer short name
-        return HttpResponse(dealer_names)
+        context["dealership_list"] = dealerships
+       
+        # return render(request, 'djangoapp/index.html', context)
+        return HttpResponse(dealerships)
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
