@@ -61,7 +61,7 @@ def get_dealers_from_cf(url, **kwargs):
                 short_name=dealer.get("short_name", ""),
             )
             results.append(dealer_obj)
-            return results
+        return results
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
