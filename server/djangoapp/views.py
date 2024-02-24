@@ -128,7 +128,7 @@ def get_dealer_details(request,dealer_id):
 # def add_review(request, dealer_id):
 def add_review(request, id):
     context = {}
-    dealer_url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+    dealer_url = "https://mbellomy81-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
     
     # Get dealer information
     dealer = get_dealer_by_id_from_cf(dealer_url, id)
