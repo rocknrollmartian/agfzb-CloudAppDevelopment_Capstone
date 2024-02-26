@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dealership Review</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.18.3/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
+</head>
+
+    <body>
+    <!--Add a nav bar here -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}">Best Cars</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+    
+                <div class="input-group">
+                    {% if user.is_authenticated %}
+                        <!-- Display user's first name or username -->
+                        <span class="navbar-text">{{ user.username }}</span>
+    
+                        <!-- Signout button/link -->
+                        <a class="btn btn-link" href="{% url 'djangoapp:logout' %}">Logout</a>
+    
+                        <!-- Add any other authenticated user-specific items here -->
+                    {% else %}
+                        <!-- Login and Signup form -->
+                     <form class="form-inline" action="{% url 'djangoapp:login' %}"  method="post">
+                        {% csrf_token %}   
+                        <input type="text" class="form-control" placeholder="Username" name="username">
+                        <input type="password" class="form-control" placeholder="Password" name="psw">
+                        <button class="btn btn-primary" type="submit">Login</button>
+                      </form>  
+                    
+                        <a class="btn btn-link" href="{% url 'djangoapp:registration' %}">Sign Up</a>
+                    {% endif %}
+    
+                    <!-- Common navigation item -->
+                    <a class="btn btn-link" href="{% url 'djangoapp:about-us' %}">About Us</a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:contact-us' %}">Contact Us</a>
+                </div>
+    
+            </ul>
+        </div>
+    </nav>
