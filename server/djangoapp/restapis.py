@@ -52,17 +52,18 @@ def post_request(url, json_payload, **kwargs):
 # - Parse JSON results into a CarDealer object list
 def get_dealers_from_cf(url, **kwargs):
     results = []
-    # Call get_request with a URL parameter
     json_result = get_request(url)
+
     if json_result:
-        # Get the row list in JSON as dealers
-        print(json_result)
+        # Print the JSON data for debugging
+        print("JSON Data:", json_result)
+
         dealers = json_result
-        # For each dealer object
+
         for dealer in dealers:
-            # Get its content in `doc` object
-            dealer_doc = dealer
-            # Create a CarDealer object with values in `doc` object
+            # Print the keys of a dealer object for debugging
+            print("Dealer Keys:", dealer.keys())
+
             dealer_obj = CarDealer(
                 address=dealer.get("address", ""),
                 city=dealer.get("city", ""),
@@ -75,7 +76,8 @@ def get_dealers_from_cf(url, **kwargs):
                 short_name=dealer.get("short_name", ""),
             )
             results.append(dealer_obj)
-        return results
+
+    return results
 
 
 # Create a get_dealer_reviews_from_cf method to get reviews by dealer id from a cloud function
@@ -83,7 +85,7 @@ def get_dealers_from_cf(url, **kwargs):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a DealerView object list
 def get_dealer_by_id_from_cf(url, dealer_id):
-    json_result = get_request(url, id=dealer_id)
+    json_result = get_request(url, dealer_id=dealer_id)
 
     if json_result:
         dealers = json_result
@@ -99,14 +101,15 @@ def get_dealer_by_id_from_cf(url, dealer_id):
             st=dealer_doc["st"],
             zip=dealer_doc["zip"]
         )
-        return results[0]
-         # Return None or handle the case when json_result is empty
+        return dealer_obj
+
+    # Return None or handle the case when json_result is empty
     return None
         
 
 def get_dealer_reviews_from_cf(url, dealer_id):
     results = []
-    json_result = get_request(url, id=dealer_id)
+    json_result = get_request(url, dealer_id=dealer_id)
     print(json_result) 
 
     if isinstance(json_result, list):
