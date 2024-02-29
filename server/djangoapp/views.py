@@ -100,7 +100,7 @@ def registration_request(request):
 def get_dealerships(request):
     if request.method == "GET":
         context = {}
-        url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get/" 
+        url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get" 
         dealerships = get_dealers_from_cf(url)
         context["dealership_list"] = dealerships
        
@@ -113,12 +113,12 @@ def get_dealerships(request):
 def get_dealer_details(request,dealer_id):
      if request.method == "GET":
          context = {}
-         dealer_url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get/"
-         dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id = dealer_id)
+         dealer_url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
+         dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id=dealer_id)
          context['dealer'] = dealer
 
          review_url = "https://mbellomy81-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/get_reviews"
-         reviews = get_dealer_reviews_from_cf(review_url, dealer_id = dealer_id)
+         reviews = get_dealer_reviews_from_cf(review_url, dealer_id=dealer_id)
          context["reviews"] = reviews
          if not context["reviews"] :
             messages.warning(request, "There are no reviews at the moment !!!")   
@@ -128,7 +128,7 @@ def get_dealer_details(request,dealer_id):
 # def add_review(request, dealer_id):
 def add_review(request, dealer_id):
     context = {}
-    dealer_url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get/"
+    dealer_url = "https://mbellomy81-3000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealerships/get"
     
     # Get dealer information
     dealer = get_dealer_by_id_from_cf(dealer_url, dealer_id)
@@ -152,7 +152,7 @@ def add_review(request, dealer_id):
         
             # Prepare payload for the review
             payload = {
-                "dealership": id,
+                "dealership": dealer_id,
                 "name": username,
                 "purchase": request.POST.get("purchasecheck") == 'on',
                 "review": request.POST.get("content"),
@@ -160,7 +160,7 @@ def add_review(request, dealer_id):
                 "car_make": car.car_make.name,
                 "car_model": car.name,
                 "car_year": int(car.year.strftime("%Y")),
-                "id": id,
+                "id": dealer_id,
                 "time": datetime.utcnow().isoformat()
             }
             
@@ -169,9 +169,9 @@ def add_review(request, dealer_id):
             review_post_url = "https://mbellomy81-5000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/api/post_review"
             
             # Make the POST request
-            post_request(review_post_url, payload, dealer_id=id)
+            post_request(review_post_url, payload, dealer_id=dealer_id)
             
-            return redirect("djangoapp:dealer_details", dealer_id=id)
+            return redirect("djangoapp:dealer_details", dealer_id=dealer_id)
         else:
             # Handle the case where the user is not authenticated
             messages.warning(request, "New review not added. Please log in to add a review !!")
